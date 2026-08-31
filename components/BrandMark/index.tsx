@@ -1,14 +1,15 @@
-import { MARK_NAME, MARK_TAGLINE, MARK_WRAPPER } from './BrandMark.styles';
+import { NAME, TAGLINE, WRAPPER, type BrandMarkSize } from './BrandMark.styles';
 
 type BrandMarkProps = {
-  tagline?: string;
+  tagline?: string | null;
+  size?: BrandMarkSize;
 };
 
-export function BrandMark({ tagline = 'Bisutería artesanal' }: BrandMarkProps) {
+export function BrandMark({ tagline = 'Bisutería artesanal', size = 'lg' }: BrandMarkProps) {
   return (
-    <div className={MARK_WRAPPER}>
-      <span className={MARK_NAME}>Golden Fantasy</span>
-      <span className={MARK_TAGLINE}>{tagline}</span>
+    <div className={WRAPPER[size]}>
+      <span className={NAME[size]}>Golden Fantasy</span>
+      {tagline && <span className={TAGLINE[size]}>{tagline}</span>}
     </div>
   );
 }

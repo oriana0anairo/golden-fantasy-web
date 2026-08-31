@@ -4,56 +4,157 @@
  * ÚNICA fuente de verdad para colores, tipografía, espaciados y radios.
  * Ningún componente debe escribir un color literal: siempre vía token.
  *
- * ⚠️ PENDIENTE DE SINCRONIZAR CON EL MOCK DE ALTA FIDELIDAD
- * Estos valores están derivados de la descripción escrita de la landing 8.1
- * (fondo salmón, card central de bordes muy redondeados partida en dos
- * mitades) porque el proyecto de Claude Design no fue accesible desde la
- * sesión donde se generó este archivo.
- * Al tener el mock a mano, reemplazar SOLO los valores de este archivo —
- * el resto de la app no necesita tocarse.
+ * Sincronizado con el sistema de diseño de alta fidelidad (mock
+ * `Tienda Artesanal.dc.html` + `_ds/golden-fantasy-design-system-*`).
+ * Los valores de marca (escalas de color, tipografía, radios, sombras) son
+ * una traducción 1:1 de los tokens `--gf-*` de ese sistema a las variables
+ * `--color-*` / `--font-*` / `--radius-*` / `--shadow-*` que ya usan los
+ * componentes de este repo, para no tener que tocarlos.
  * =========================================================================== */
 
 @theme {
-  /* --- Marca ------------------------------------------------------------ */
-  --color-salmon: #f4a68c;
-  --color-salmon-soft: #f8c4b2;
-  --color-salmon-deep: #e2836a;
+  /* --- Turquesa — ancla de marca ----------------------------------------- */
+  --color-turquesa-950: #04211f;
+  --color-turquesa-900: #06332f;
+  --color-turquesa-800: #0a4540;
+  --color-turquesa-700: #0e5a54;
+  --color-turquesa-600: #13756d;
+  --color-turquesa-500: #1a9187;
+  --color-turquesa-400: #3fada3;
+  --color-turquesa-300: #7bc9c1;
+  --color-turquesa-200: #b4e1dc;
+  --color-turquesa-100: #dbf0ed;
+  --color-turquesa-50: #eef8f6;
 
-  --color-gold: #c9a227;
-  --color-gold-soft: #e3c76a;
-  --color-gold-deep: #a07f14;
+  /* --- Oro — acento metálico ---------------------------------------------- */
+  --color-oro-700: #8c6b18;
+  --color-oro-600: #b08a22;
+  --color-oro-500: #c9a227;
+  --color-oro-400: #ddbb55;
+  --color-oro-300: #ebd189;
+  --color-oro-200: #f5e6b8;
+  --color-oro-100: #fbf4de;
 
-  /* --- Superficies ------------------------------------------------------ */
-  --color-surface: #fffaf7;
-  --color-surface-muted: #f3e7e0;
-  --color-surface-inverse: #2b1d18;
+  /* --- Rosa — calidez --------------------------------------------------- */
+  --color-rosa-700: #9e544e;
+  --color-rosa-600: #b96a63;
+  --color-rosa-500: #d3867d;
+  --color-rosa-400: #e4a69d;
+  --color-rosa-300: #f0c4bd;
+  --color-rosa-200: #f8deda;
+  --color-rosa-100: #fcefec;
 
-  /* --- Texto ------------------------------------------------------------ */
-  --color-ink: #2b1d18;
-  --color-ink-soft: #6b5750;
-  --color-ink-inverse: #fffaf7;
+  /* --- Cacao — tono cálido de base ---------------------------------------- */
+  --color-cacao-800: #3a2620;
+  --color-cacao-700: #4e332a;
+  --color-cacao-600: #6b4a3a;
+  --color-cacao-500: #8a6250;
+  --color-cacao-400: #a98470;
+  --color-cacao-300: #c9aa98;
+  --color-cacao-200: #e4d2c6;
+  --color-cacao-100: #f3e8e0;
 
-  /* --- Estado ----------------------------------------------------------- */
-  --color-danger: #b3261e;
-  --color-danger-soft: #fbe9e7;
-  --color-success: #2e7d32;
+  /* --- Verde — salvia botánico -------------------------------------------- */
+  --color-verde-700: #3c5340;
+  --color-verde-600: #4f6b51;
+  --color-verde-500: #6a8a66;
+  --color-verde-400: #8fa987;
+  --color-verde-300: #b8ccb0;
+  --color-verde-200: #dce7d7;
+  --color-verde-100: #eff4ec;
 
-  /* --- Bordes ----------------------------------------------------------- */
-  --color-line: #e6d3ca;
-  --color-line-strong: #cbb0a4;
+  /* --- Crema — neutros, todos con base cálida ----------------------------- */
+  --color-crema-50: #fffcf8;
+  --color-crema-100: #fdf6ef;
+  --color-crema-200: #f6ece2;
+  --color-crema-300: #eadfd3;
+  --color-crema-400: #d6c8ba;
+  --color-crema-500: #b9a798;
+  --color-tinta: #241b17;
 
-  /* --- Tipografía ------------------------------------------------------- */
-  --font-display: var(--font-playfair), Georgia, 'Times New Roman', serif;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* --- Semántico: superficies y texto ------------------------------------ */
+  --color-bg: var(--color-crema-100);
+  --color-surface: var(--color-crema-50);
+  --color-surface-muted: var(--color-crema-200);
+  --color-surface-inverse: var(--color-turquesa-950);
+  --color-surface-brand: var(--color-turquesa-900);
 
-  /* --- Radios ----------------------------------------------------------- */
-  /* La card de la landing usa un radio muy marcado (ver 8.1). */
-  --radius-card: 2.5rem;
-  --radius-panel: 1.5rem;
-  --radius-field: 0.75rem;
+  --color-ink: var(--color-turquesa-950);
+  --color-ink-soft: var(--color-cacao-500);
+  --color-ink-subtle: var(--color-crema-500);
+  --color-ink-inverse: var(--color-crema-50);
+  --color-ink-link: var(--color-turquesa-600);
+  --color-ink-link-hover: var(--color-turquesa-800);
+
+  --color-line: var(--color-crema-300);
+  --color-line-strong: var(--color-cacao-300);
+  --color-focus: var(--color-oro-500);
+
+  /* --- Marca: alias legado usados por Landing/Auth (Épica 1) -------------- */
+  --color-salmon: var(--color-rosa-400);
+  --color-salmon-soft: var(--color-rosa-200);
+  --color-salmon-deep: var(--color-rosa-600);
+  --color-gold: var(--color-oro-500);
+  --color-gold-soft: var(--color-oro-300);
+  --color-gold-deep: var(--color-oro-700);
+
+  /* --- Estado -------------------------------------------------------------- */
+  --color-success: var(--color-verde-600);
+  --color-success-soft: var(--color-verde-100);
+  --color-warning: var(--color-oro-600);
+  --color-warning-soft: var(--color-oro-100);
+  --color-danger: #a33a32;
+  --color-danger-soft: var(--color-rosa-100);
+  --color-info: var(--color-turquesa-500);
+  --color-info-soft: var(--color-turquesa-50);
+
+  --color-price: var(--color-turquesa-900);
+  --color-price-sale: var(--color-rosa-700);
+
+  /* --- Gradientes y veladuras --------------------------------------------- */
+  --gradient-brand: linear-gradient(160deg, var(--color-turquesa-800) 0%, var(--color-turquesa-600) 100%);
+  --wash-warm: linear-gradient(180deg, var(--color-crema-100) 0%, var(--color-rosa-100) 100%);
+  --wash-warm-diagonal: linear-gradient(140deg, var(--color-rosa-200) 0%, var(--color-rosa-100) 55%, var(--color-crema-100) 100%);
+  --rule-on-wash: rgba(36, 27, 23, 0.14);
+  --veil-dark: rgba(6, 51, 47, 0.55);
+
+  /* --- Tipografía ---------------------------------------------------------
+   * Serif display para nombres/títulos, sans geométrica para todo lo
+   * funcional. Navegación, botones y "eyebrows" siempre en mayúsculas con
+   * tracking generoso.
+   */
+  --font-display: var(--font-cormorant), Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 22px;
+  --text-xl: 28px;
+  --text-2xl: 36px;
+  --text-3xl: 48px;
+
+  --tracking-wide: 0.06em;
+  --tracking-wider: 0.14em;
+  --tracking-widest: 0.24em;
+
+  /* --- Radios --------------------------------------------------------------
+   * La card de la landing usa un radio muy marcado (8.1): 56px, tal cual el
+   * mock. `--radius-field`/`--radius-pill` cubren inputs y píldoras.
+   */
+  --radius-card: 56px;
+  --radius-panel: 4px;
+  --radius-field: 4px;
   --radius-pill: 9999px;
+  --radius-arch: 180px 180px 8px 8px;
 
-  /* --- Sombras ---------------------------------------------------------- */
-  --shadow-card: 0 24px 60px -20px rgb(80 40 25 / 0.35);
-  --shadow-modal: 0 30px 70px -25px rgb(80 40 25 / 0.45);
+  /* --- Sombras — cálidas, tono cacao, nunca gris neutro -------------------- */
+  --shadow-xs: 0 1px 2px rgba(58, 38, 32, 0.06);
+  --shadow-sm: 0 2px 6px rgba(58, 38, 32, 0.07);
+  --shadow-md: 0 6px 18px -4px rgba(58, 38, 32, 0.1);
+  --shadow-card: 0 18px 40px -12px rgba(58, 38, 32, 0.16);
+  --shadow-modal: 0 32px 64px -20px rgba(58, 38, 32, 0.22);
+  --ring-focus: 0 0 0 2px var(--color-crema-50), 0 0 0 4px var(--color-oro-500);
 }

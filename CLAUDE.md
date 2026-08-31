@@ -10,9 +10,10 @@ Tienda de bisutería artesanal en Colombia (COP). Dos roles: **Admin** (inventar
 - Cada producción es independiente (sin recetas fijas reutilizables). El precio de materia prima se autocompleta con el **último lote comprado** registrado (se guarda como snapshot en cada producción, no como referencia viva). El costo de mano de obra sale del SMLV, configurado 1 vez al año.
 - El precio que ve el comprador en el catálogo es el valor guardado en `Product.price` al publicar — no se recalcula en vivo desde la producción.
 - Límite fijo de 5 unidades por producto en el selector de cantidad (v1).
+- El checkout es un **stepper de 3 pasos**: dirección → resumen → pago (Mercado Pago/PSE). Confirmado en el mock de alta fidelidad (`Tienda Artesanal.dc.html`), reemplaza cualquier mención anterior a un checkout de un solo paso.
 
 ## Fuera de alcance en v1 (no construir)
-Alertas de stock, gestión completa de usuarios admin desde UI, historial de pedidos, cálculo de costo de envío, límite de cantidad configurable por producto, checkout como stepper (en v1 es un solo paso).
+Alertas de stock, gestión completa de usuarios admin desde UI, historial de pedidos, cálculo de costo de envío, límite de cantidad configurable por producto.
 
 ## Arquitectura: este es SOLO el repo de frontend
 El backend (API, base de datos, lógica de negocio, Prisma) vive en **otro repo separado** (`golden-fantasy-backend`). Este proyecto no tiene base de datos propia ni lógica de negocio — es una capa de presentación que le habla al backend por HTTP.
