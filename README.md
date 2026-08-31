@@ -63,10 +63,36 @@ El backend tiene un único `POST /auth/login` para todos los roles y devuelve el
 Colores, tipografía, radios y sombras viven **solo** en `app/tokens.css`. Ningún
 componente escribe un color literal.
 
-> ⚠️ Los valores actuales están derivados de la descripción escrita de la landing
+> ⚠️ **Pendiente: sincronizar con el mock de alta fidelidad.**
+> Los valores actuales están derivados de la descripción escrita de la landing
 > (fondo salmón, card de bordes muy redondeados partida en dos mitades) porque el
 > proyecto de Claude Design no fue accesible desde la sesión que generó el código.
-> Al tener el mock a mano, basta reemplazar los valores de ese archivo.
+
+### Cómo aplicar el mock (para la próxima sesión)
+
+El proyecto de diseño es `Tienda Artesanal.dc.html`, con su design system en
+`_ds/golden-fantasy-design-system-.../`. Para traerlo:
+
+1. Trabajar sobre la rama `claude/golden-fantasy-frontend-setup-jq0xab` — el
+   código de Sprint 0 y Épica 1 vive ahí, todavía sin mezclar a la rama por
+   defecto.
+2. Mapear cada archivo de tokens del design system al bloque `@theme` de
+   `app/tokens.css`:
+
+   | Archivo del design system | Qué reemplaza en `app/tokens.css` |
+   |---|---|
+   | `tokens/colors.css` | `--color-*` (salmón, dorado, superficies, texto, línea) |
+   | `tokens/fonts.css` + `tokens/typography.css` | `--font-display`, `--font-body` y los tamaños |
+   | `tokens/spacing.css` | espaciados y los radios `--radius-*` |
+   | `tokens/elevation.css` | `--shadow-card`, `--shadow-modal` |
+   | `tokens/base.css`, `tokens/motion.css` | base y transiciones |
+
+3. Ajustar la maqueta de `Tienda Artesanal.dc.html` sobre los componentes que ya
+   existen: `components/LandingCard` (card partida), `modals/AuthModal`
+   (login/registro) y `components/AdminLoginForm`.
+
+Ningún componente escribe un color literal, así que el paso 2 no debería requerir
+tocar nada fuera de `app/tokens.css`.
 
 ## Estado del backlog
 
