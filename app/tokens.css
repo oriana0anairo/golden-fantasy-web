@@ -1,0 +1,59 @@
+/* ===========================================================================
+ * Golden Fantasy — Tokens de diseño
+ * ---------------------------------------------------------------------------
+ * ÚNICA fuente de verdad para colores, tipografía, espaciados y radios.
+ * Ningún componente debe escribir un color literal: siempre vía token.
+ *
+ * ⚠️ PENDIENTE DE SINCRONIZAR CON EL MOCK DE ALTA FIDELIDAD
+ * Estos valores están derivados de la descripción escrita de la landing 8.1
+ * (fondo salmón, card central de bordes muy redondeados partida en dos
+ * mitades) porque el proyecto de Claude Design no fue accesible desde la
+ * sesión donde se generó este archivo.
+ * Al tener el mock a mano, reemplazar SOLO los valores de este archivo —
+ * el resto de la app no necesita tocarse.
+ * =========================================================================== */
+
+@theme {
+  /* --- Marca ------------------------------------------------------------ */
+  --color-salmon: #f4a68c;
+  --color-salmon-soft: #f8c4b2;
+  --color-salmon-deep: #e2836a;
+
+  --color-gold: #c9a227;
+  --color-gold-soft: #e3c76a;
+  --color-gold-deep: #a07f14;
+
+  /* --- Superficies ------------------------------------------------------ */
+  --color-surface: #fffaf7;
+  --color-surface-muted: #f3e7e0;
+  --color-surface-inverse: #2b1d18;
+
+  /* --- Texto ------------------------------------------------------------ */
+  --color-ink: #2b1d18;
+  --color-ink-soft: #6b5750;
+  --color-ink-inverse: #fffaf7;
+
+  /* --- Estado ----------------------------------------------------------- */
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-success: #2e7d32;
+
+  /* --- Bordes ----------------------------------------------------------- */
+  --color-line: #e6d3ca;
+  --color-line-strong: #cbb0a4;
+
+  /* --- Tipografía ------------------------------------------------------- */
+  --font-display: var(--font-playfair), Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Radios ----------------------------------------------------------- */
+  /* La card de la landing usa un radio muy marcado (ver 8.1). */
+  --radius-card: 2.5rem;
+  --radius-panel: 1.5rem;
+  --radius-field: 0.75rem;
+  --radius-pill: 9999px;
+
+  /* --- Sombras ---------------------------------------------------------- */
+  --shadow-card: 0 24px 60px -20px rgb(80 40 25 / 0.35);
+  --shadow-modal: 0 30px 70px -25px rgb(80 40 25 / 0.45);
+}
