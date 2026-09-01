@@ -28,6 +28,7 @@ npm run dev
 | `BACKEND_API_URL` | URL base del backend. Solo se lee del lado del servidor. |
 | `NEXTAUTH_SECRET` | Secreto de firma de la sesión. Generar con `openssl rand -base64 32`. |
 | `NEXTAUTH_URL` | URL pública de esta app. |
+| `IMAGE_HOSTS` | Hosts extra (separados por comas) desde los que `next/image` puede optimizar fotos de producto. El host de `BACKEND_API_URL` ya se permite solo; déjalo vacío si el backend devuelve rutas relativas. |
 
 ## Cómo fluye la autenticación
 
@@ -78,6 +79,8 @@ sus valores.
   middleware, dashboard placeholder. ✅
 - **Épica 2** — tokens sincronizados con el mock, catálogo público (C1: banner,
   búsqueda, chips de categoría, grid) y modal de detalle de producto (C7). ✅
+  El catálogo se alimenta solo de `GET /productos` del backend; sin ese endpoint
+  (o sin piezas publicadas) muestra su estado vacío en vez de fallar.
 - **Épica 3 en adelante** — carrito, checkout (stepper de 3 pasos), inventario,
   producción. Pendiente.
 

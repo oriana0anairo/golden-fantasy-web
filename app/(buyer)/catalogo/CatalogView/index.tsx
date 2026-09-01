@@ -17,10 +17,12 @@ const BANNER_META = [
 
 type CatalogViewProps = {
   products: Product[];
+  /** El backend no respondió: cambia el mensaje del estado vacío. */
+  loadFailed: boolean;
 };
 
 /** Catálogo público (D1, C1): banner, búsqueda, chips de categoría y grid. */
-export function CatalogView({ products }: CatalogViewProps) {
+export function CatalogView({ products, loadFailed }: CatalogViewProps) {
   const {
     query,
     setQuery,
@@ -29,22 +31,22 @@ export function CatalogView({ products }: CatalogViewProps) {
     categories,
     shown,
     resultsLabel,
+    emptyLabel,
     bannerTitle,
     bannerLede,
     detail,
+    notice,
     openDetail,
     closeDetail,
     handleAddToCart,
     authMode,
     openAuth,
     closeAuth,
-  } = useCatalogView(products);
+  } = useCatalogView({ products, loadFailed });
 
   return (
     <div className={PAGE}>
-      <AnnouncementBar>
-        Envío gratis por compras superiores a $200.000 · Cambios sin costo durante 15 días
-      </AnnouncementBar>
+      <AnnouncementBar>Piezas hechas a mano en nuestro taller · Coordinamos la entrega contigo</AnnouncementBar>
 
       <CatalogHeader query={query} onQueryChange={setQuery} onOpenAuth={openAuth} />
 
@@ -59,14 +61,18 @@ export function CatalogView({ products }: CatalogViewProps) {
 
       <ProductGrid
         products={shown}
-        categories={categories}
-        category={category}
-        onCategoryChange={setCategory}
-        resultsLabel={resultsLabel}
+        filters={{ categories, active: category, onSelect: setCategory }}
+        labels={{ results: resultsLabel, empty: emptyLabel }}
         onView={openDetail}
       />
 
-      <ProductDetailModal product={detail} onClose={closeDetail} onAddToCart={handleAddToCart} />
+      <ProductDetailModal
+        key={detail?.id ?? 'sin-detalle'}
+        product={detail}
+        notice={notice}
+        onClose={closeDetail}
+        onAddToCart={handleAddToCart}
+      />
 
       {authMode !== null && <AuthModal key={authMode} open onClose={closeAuth} initialMode={authMode} />}
     </div>

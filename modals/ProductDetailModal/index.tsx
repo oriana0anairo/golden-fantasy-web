@@ -2,6 +2,7 @@
 
 import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/Button';
+import { FormAlert } from '@/components/FormAlert';
 import { Dialog } from '@/components/Dialog';
 import { PriceTag } from '@/components/PriceTag';
 import { ProductMedia } from '@/components/ProductMedia';
@@ -26,13 +27,15 @@ const MAX_QTY = 5;
 
 type ProductDetailModalProps = {
   product: Product | null;
+  /** Confirmación o aviso tras intentar agregar al carrito. */
+  notice: string | null;
   onClose: () => void;
   onAddToCart: (product: Product, qty: number) => void;
 };
 
 /** Modal de detalle de producto (C7): fotos, descripción, cantidad y agregar al carrito. */
-export function ProductDetailModal({ product, onClose, onAddToCart }: ProductDetailModalProps) {
-  const { qty, setQty } = useProductDetailModal(product);
+export function ProductDetailModal({ product, notice, onClose, onAddToCart }: ProductDetailModalProps) {
+  const { qty, setQty } = useProductDetailModal();
 
   return (
     <Dialog open={product !== null} onClose={onClose} title={product?.name ?? ''} showTitle={false} size="lg">
@@ -63,6 +66,8 @@ export function ProductDetailModal({ product, onClose, onAddToCart }: ProductDet
             <Button size="lg" fullWidth icon={ShoppingBag} iconPosition="left" onClick={() => onAddToCart(product, qty)}>
               Agregar al carrito
             </Button>
+
+            <FormAlert message={notice} tone="success" />
           </div>
         </div>
       )}

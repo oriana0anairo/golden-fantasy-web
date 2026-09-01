@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
-import type { Product } from '@/lib/products';
+import { useState } from 'react';
 
-/** Cantidad vuelve a 1 cada vez que se abre el detalle de una pieza distinta. */
-export function useProductDetailModal(product: Product | null) {
+/**
+ * Cantidad seleccionada en el detalle.
+ *
+ * No hace falta un efecto para reiniciarla al cambiar de pieza: el modal se
+ * remonta con `key={product.id}`, así que el estado arranca de cero solo
+ * (ver skill state-performance).
+ */
+export function useProductDetailModal() {
   const [qty, setQty] = useState(1);
-
-  useEffect(() => {
-    setQty(1);
-  }, [product?.id]);
 
   return { qty, setQty };
 }

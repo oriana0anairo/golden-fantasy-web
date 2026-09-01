@@ -4,23 +4,31 @@ import { CHIPS_ROW, EMPTY, GRID, MAIN, RESULTS_LABEL, RESULTS_ROW } from './Prod
 
 type ProductGridProps = {
   products: Product[];
-  categories: string[];
-  category: string;
-  onCategoryChange: (category: string) => void;
-  resultsLabel: string;
+  /** Filtro de categorías: opciones, cuál está activa y cómo cambiarla. */
+  filters: { categories: string[]; active: string; onSelect: (category: string) => void };
+  /** Textos derivados: conteo de resultados y qué decir cuando no hay ninguno. */
+  labels: { results: string; empty: string };
   onView: (product: Product) => void;
 };
 
-export function ProductGrid({ products, categories, category, onCategoryChange, resultsLabel, onView }: ProductGridProps) {
+export function ProductGrid({ products, filters, labels, onView }: ProductGridProps) {
   return (
     <main className={MAIN}>
-      <div className={RESULTS_ROW}>
-        <span className={RESULTS_LABEL}>{resultsLabel}</span>
-      </div>
+      {products.length > 0 && (
+        <div className={RESULTS_ROW}>
+          <span className={RESULTS_LABEL}>{labels.results}</span>
+        </div>
+      )}
 
-      <div className={CHIPS_ROW}>
-        <CategoryChips categories={categories} active={category} onSelect={onCategoryChange} />
-      </div>
+      {filters.categories.length > 1 && (
+        <div className={CHIPS_ROW}>
+          <CategoryChips
+            categories={filters.categories}
+            active={filters.active}
+            onSelect={filters.onSelect}
+          />
+        </div>
+      )}
 
       {products.length > 0 ? (
         <div className={GRID}>
@@ -29,7 +37,7 @@ export function ProductGrid({ products, categories, category, onCategoryChange, 
           ))}
         </div>
       ) : (
-        <p className={EMPTY}>No encontramos piezas con ese nombre. Prueba con otra palabra o mira todo el catálogo.</p>
+        <p className={EMPTY}>{labels.empty}</p>
       )}
     </main>
   );
