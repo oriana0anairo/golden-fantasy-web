@@ -3,7 +3,7 @@
 import { Gem, Sparkles, Truck } from 'lucide-react';
 import { AnnouncementBar, CategoryBanner } from '@/components';
 import { AuthModal, ProductDetailModal } from '@/modals';
-import type { Product } from '@/lib/products';
+import type { Product } from '@/lib/product';
 import { CatalogHeader } from './CatalogHeader';
 import { PAGE } from './CatalogView.styles';
 import { ProductGrid } from './ProductGrid';
@@ -21,24 +21,20 @@ type CatalogViewProps = {
   loadFailed: boolean;
 };
 
-/** Catálogo público (D1, C1): banner, búsqueda, chips de categoría y grid. */
+/** Catálogo público (D1, C1): banner, búsqueda y grid de piezas. */
 export function CatalogView({ products, loadFailed }: CatalogViewProps) {
   const {
-    query,
-    setQuery,
-    category,
-    setCategory,
-    categories,
-    shown,
+    onSearch,
+    products: shown,
+    loading,
     resultsLabel,
     emptyLabel,
     bannerTitle,
-    bannerLede,
     detail,
     notice,
     openDetail,
     closeDetail,
-    handleAddToCart,
+    addToCart,
     authMode,
     openAuth,
     closeAuth,
@@ -48,21 +44,21 @@ export function CatalogView({ products, loadFailed }: CatalogViewProps) {
     <div className={PAGE}>
       <AnnouncementBar>Piezas hechas a mano en nuestro taller · Coordinamos la entrega contigo</AnnouncementBar>
 
-      <CatalogHeader query={query} onQueryChange={setQuery} onOpenAuth={openAuth} />
+      <CatalogHeader onSearch={onSearch} onOpenAuth={openAuth} />
 
       <CategoryBanner
         eyebrow="Catálogo"
         script="Colección"
         title={bannerTitle}
-        lede={bannerLede}
+        lede="Cuentas tejidas una por una, cerámica torneada y fibras naturales. Cada pieza se vende una sola vez."
         meta={BANNER_META}
         height={420}
       />
 
       <ProductGrid
         products={shown}
-        filters={{ categories, active: category, onSelect: setCategory }}
         labels={{ results: resultsLabel, empty: emptyLabel }}
+        loading={loading}
         onView={openDetail}
       />
 
@@ -71,7 +67,7 @@ export function CatalogView({ products, loadFailed }: CatalogViewProps) {
         product={detail}
         notice={notice}
         onClose={closeDetail}
-        onAddToCart={handleAddToCart}
+        onAddToCart={addToCart}
       />
 
       {authMode !== null && <AuthModal key={authMode} open onClose={closeAuth} initialMode={authMode} />}

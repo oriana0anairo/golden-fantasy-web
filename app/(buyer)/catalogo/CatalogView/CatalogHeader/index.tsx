@@ -1,18 +1,18 @@
 'use client';
 
-import { Search, ShoppingBag, User } from 'lucide-react';
+import { Search, User } from 'lucide-react';
 import { BrandMark, IconButton, TextField } from '@/components';
+import { CartButton } from './CartButton';
 import { ACTIONS, HEADER, SEARCH, USER_LABEL } from './CatalogHeader.styles';
 import { useCatalogHeader } from './useCatalogHeader';
 
 type CatalogHeaderProps = {
-  query: string;
-  onQueryChange: (query: string) => void;
+  onSearch: (search: string) => void;
   onOpenAuth: () => void;
 };
 
-export function CatalogHeader({ query, onQueryChange, onOpenAuth }: CatalogHeaderProps) {
-  const { userLabel, isLoggedIn } = useCatalogHeader();
+export function CatalogHeader({ onSearch, onOpenAuth }: CatalogHeaderProps) {
+  const { value, setValue, unitCount, userLabel, isLoggedIn } = useCatalogHeader(onSearch);
 
   return (
     <header className={HEADER}>
@@ -23,9 +23,10 @@ export function CatalogHeader({ query, onQueryChange, onOpenAuth }: CatalogHeade
           label="Buscar en el catálogo"
           hideLabel
           icon={Search}
-          value={query}
-          onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Buscar canastos, cerámica, textiles…"
+          type="search"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="Buscar por nombre…"
         />
       </div>
 
@@ -37,7 +38,7 @@ export function CatalogHeader({ query, onQueryChange, onOpenAuth }: CatalogHeade
           variant="outline"
           onClick={isLoggedIn ? undefined : onOpenAuth}
         />
-        <IconButton icon={ShoppingBag} label="Ver carrito" variant="solid" href="/carrito" />
+        <CartButton unitCount={unitCount} />
       </div>
     </header>
   );

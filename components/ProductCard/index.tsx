@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { PriceTag } from '@/components/PriceTag';
 import { ProductMedia } from '@/components/ProductMedia';
-import type { Product } from '@/lib/products';
+import { mainPhoto, type Product } from '@/lib/product';
 import { ARTICLE, CATEGORY, INFO, MEDIA_BUTTON, NAME } from './ProductCard.styles';
 
 type ProductCardProps = {
@@ -14,10 +14,10 @@ export function ProductCard({ product, onView }: ProductCardProps) {
   return (
     <article className={ARTICLE}>
       <button type="button" onClick={onView} className={MEDIA_BUTTON}>
-        <ProductMedia src={product.imageUrl} alt={product.name} label={product.name} />
+        <ProductMedia src={mainPhoto(product)} alt={product.name} label={product.name} />
       </button>
       <div className={INFO}>
-        <span className={CATEGORY}>{product.category}</span>
+        {product.category && <span className={CATEGORY}>{product.category}</span>}
         <h3 className={NAME}>{product.name}</h3>
         <PriceTag price={product.price} />
       </div>

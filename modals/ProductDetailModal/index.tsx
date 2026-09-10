@@ -2,12 +2,12 @@
 
 import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/Button';
-import { FormAlert } from '@/components/FormAlert';
 import { Dialog } from '@/components/Dialog';
+import { FormAlert } from '@/components/FormAlert';
 import { PriceTag } from '@/components/PriceTag';
-import { ProductMedia } from '@/components/ProductMedia';
 import { QuantityStepper } from '@/components/QuantityStepper';
-import type { Product } from '@/lib/products';
+import type { Product } from '@/lib/product';
+import { ProductGallery } from './ProductGallery';
 import {
   DESCRIPTION,
   EYEBROW,
@@ -23,8 +23,6 @@ import {
 } from './ProductDetailModal.styles';
 import { useProductDetailModal } from './useProductDetailModal';
 
-const MAX_QTY = 5;
-
 type ProductDetailModalProps = {
   product: Product | null;
   /** Confirmación o aviso tras intentar agregar al carrito. */
@@ -33,38 +31,47 @@ type ProductDetailModalProps = {
   onAddToCart: (product: Product, qty: number) => void;
 };
 
-/** Modal de detalle de producto (C7): fotos, descripción, cantidad y agregar al carrito. */
+/** Detalle de producto (8.5, C7): galería, specs, cantidad y agregar al carrito. */
 export function ProductDetailModal({ product, notice, onClose, onAddToCart }: ProductDetailModalProps) {
-  const { qty, setQty } = useProductDetailModal();
+  const { qty, setQty, maxQty, soldOut, showStepper, stockHint } = useProductDetailModal(product);
 
   return (
     <Dialog open={product !== null} onClose={onClose} title={product?.name ?? ''} showTitle={false} size="lg">
       {product && (
         <div className={GRID}>
-          <ProductMedia src={product.imageUrl} alt={product.name} label={product.name} />
+          <ProductGallery photos={product.photos} name={product.name} />
 
           <div className={INFO}>
-            <span className={EYEBROW}>{product.category}</span>
+            {product.category && <span className={EYEBROW}>{product.category}</span>}
             <h3 className={NAME}>{product.name}</h3>
             <PriceTag price={product.price} size="lg" />
             <p className={DESCRIPTION}>{product.description}</p>
 
-            <div className={SPECS}>
-              {product.specs.map(([label, value]) => (
-                <div key={label} className={SPEC_ROW}>
-                  <span className={SPEC_LABEL}>{label}</span>
-                  <span className={SPEC_VALUE}>{value}</span>
-                </div>
-              ))}
-            </div>
+            {product.specs.length > 0 && (
+              <dl className={SPECS}>
+                {product.specs.map(([label, value]) => (
+                  <div key={label} className={SPEC_ROW}>
+                    <dt className={SPEC_LABEL}>{label}</dt>
+                    <dd className={SPEC_VALUE}>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
 
             <div className={QTY_ROW}>
-              <QuantityStepper value={qty} max={MAX_QTY} onChange={setQty} />
-              <span className={QTY_HINT}>Máximo {MAX_QTY} unidades por pedido</span>
+              {showStepper && <QuantityStepper value={qty} max={maxQty} onChange={setQty} />}
+              <span className={QTY_HINT}>{stockHint}</span>
             </div>
 
-            <Button size="lg" fullWidth icon={ShoppingBag} iconPosition="left" onClick={() => onAddToCart(product, qty)}>
-              Agregar al carrito
+            <Button
+              size="lg"
+              fullWidth
+              icon={ShoppingBag}
+              iconPosition="left"
+              disabled={soldOut}
+              onClick={() => onAddToCart(product, qty)}
+            >
+              {soldOut ? 'Agotada' : 'Agregar al carrito'}
             </Button>
 
             <FormAlert message={notice} tone="success" />

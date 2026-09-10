@@ -77,11 +77,18 @@ sus valores.
 - **Sprint 0** — setup, tokens, NextAuth contra el backend. ✅
 - **Épica 1** — landing (8.1), modales de login/registro, `/admin/login`,
   middleware, dashboard placeholder. ✅
-- **Épica 2** — tokens sincronizados con el mock, catálogo público (C1: banner,
-  búsqueda, chips de categoría, grid) y modal de detalle de producto (C7). ✅
-  El catálogo se alimenta solo de `GET /productos` del backend; sin ese endpoint
-  (o sin piezas publicadas) muestra su estado vacío en vez de fallar.
-- **Épica 3 en adelante** — carrito, checkout (stepper de 3 pasos), inventario,
-  producción. Pendiente.
+- **Épica 2** — tokens del mock, catálogo público (C1) y detalle de producto
+  (C7) contra el catálogo real del backend. ✅
+  - `GET /productos` alimenta el grid; la búsqueda usa `?search=` con debounce,
+    a través del proxy `/api/productos` (el navegador nunca llama al backend).
+  - Tope de unidades por pieza = `min(5, stockQuantity)` (D7), no un 5 fijo.
+  - Carrito en memoria vía contexto de React (`/context/CartContext`). Todavía
+    no se persiste: la Épica 3 lo convierte en `Order` al pagar.
+  - Sin ese endpoint, o sin piezas publicadas, el catálogo muestra su estado
+    vacío en vez de fallar.
+  - Filtro por categoría: **pendiente de decisión**, no construido. El
+    componente `CategoryChips` queda sin usar, listo para cuando se decida.
+- **Épica 3 en adelante** — página de carrito, checkout (stepper de 3 pasos),
+  inventario, producción. Pendiente.
 
 Las convenciones de código están en `CLAUDE.md` y en `.claude/skills/`.
