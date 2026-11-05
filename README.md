@@ -28,7 +28,42 @@ npm run dev
 | `BACKEND_API_URL` | URL base del backend. Solo se lee del lado del servidor. |
 | `NEXTAUTH_SECRET` | Secreto de firma de la sesión. Generar con `openssl rand -base64 32`. |
 | `NEXTAUTH_URL` | URL pública de esta app. **No dejarla definida y vacía**: NextAuth lanza `Invalid URL` y el build falla. Si no se usa, borrarla. |
-| `IMAGE_HOSTS` | Hosts extra (separados por comas) desde los que `next/image` puede optimizar fotos de producto. El host de `BACKEND_API_URL` ya se permite solo; déjalo vacío si el backend devuelve rutas relativas. |
+| `IMAGE_HOSTS` | Hosts (separados por comas) desde los que `next/image` puede optimizar fotos de producto. El host de `BACKEND_API_URL` ya se permite solo. Hoy el backend sirve las fotos desde `picsum.photos`, así que ese valor es necesario para que el catálogo muestre imágenes. |
+
+## Ramas y flujo de trabajo
+
+| Rama | Para qué |
+|---|---|
+| `local` | Entrada del trabajo nuevo: aquí se integra, se resuelven conflictos y se comprueba que todo corre bien. |
+| `develop` | Pruebas, una vez que lo de `local` se da por sano. |
+| `prod` | Lo que se despliega. Un push aquí dispara el despliegue de producción. |
+| `main` | La aplicación terminada. |
+
+```
+feature → local → develop → prod → despliegue
+                                   main ← lo que ya está terminado
+```
+
+> ⚠️ **`main` no es la rama de despliegue.** Es lo contrario de la convención
+> habitual, donde `main` es producción. Aquí despliega `prod`. Conviene
+> comprobarlo antes de dar por supuesto lo de siempre.
+
+## Despliegue (Vercel)
+
+- Proyecto `golden-fantasy-web`, dominio `golden-fantasy-web.vercel.app`.
+- **Rama de producción: `prod`.** Se configura en Vercel en
+  **Settings → Environments → Production → Branch Tracking** — ya no está bajo
+  Settings → Git, que es donde la busca casi todo el mundo. Cada push a `prod`
+  crea un Production Deployment.
+- Hay un **Deploy Hook** (`Produccion` → `prod`): un `POST` a su URL dispara un
+  despliegue sin necesidad de hacer push. Es la forma de redesplegar después de
+  cambiar variables de entorno, que por sí solas no reconstruyen nada.
+- Las variables de la tabla de arriba se definen en
+  **Settings → Environment Variables**. `IMAGE_HOSTS` tiene que incluir el host
+  de las fotos de producto (hoy `picsum.photos`), o el catálogo mostrará el
+  marcador en vez de las imágenes.
+- En el backend (Render) hay que mantener **`CORS_ORIGIN`** apuntando al dominio
+  de Vercel.
 
 ## Cómo fluye la autenticación
 
